@@ -33,13 +33,6 @@ public class Main {
         frame.setVisible(true);
         game.action();
 
-        //Start Server
-        try {
-            Client client = new Client("127.0.0.1", 8888);
-            client.startListening();
-            client.sendJoinRequest();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }
