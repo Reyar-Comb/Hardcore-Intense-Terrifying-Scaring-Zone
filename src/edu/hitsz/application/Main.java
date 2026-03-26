@@ -1,5 +1,7 @@
 package edu.hitsz.application;
 
+import edu.hitsz.network.Client;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -30,5 +32,14 @@ public class Main {
         frame.add(game);
         frame.setVisible(true);
         game.action();
+
+        //Start Server
+        try {
+            Client client = new Client("127.0.0.1", 8888);
+            client.startListening();
+            client.sendJoinRequest();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
