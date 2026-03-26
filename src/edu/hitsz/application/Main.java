@@ -30,5 +30,17 @@ public class Main {
         frame.add(game);
         frame.setVisible(true);
         game.action();
+
+        //start server
+        try {
+            GameClient client = new GameClient("127.0.0.1", 8888);
+
+            client.startListening();
+
+            client.sendJoinRequest();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
