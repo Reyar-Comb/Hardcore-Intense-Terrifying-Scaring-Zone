@@ -1,5 +1,8 @@
 package edu.hitsz.network;
 
+import edu.hitsz.aircraft.RemotePlayerAircraft;
+import edu.hitsz.application.RemotePlayerController;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -55,6 +58,7 @@ public class Client {
                 int x = buffer.getInt();
                 int y = buffer.getInt();
                 System.out.printf(" %d is at %d %d", playerId, x, y);
+                RemotePlayerController.updateRemotePlayer(playerId, x, y, 100);
                 break;
 
         }
@@ -73,4 +77,21 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public void updateState(int locationX, int locationY, int hp) {
+        try {
+            ByteBuffer buffer = ByteBuffer.allocate(13);
+            buffer.put((byte) 0x03);
+            buffer.putInt(PlayerId);
+            buffer.putInt(locationX);
+            buffer.putInt(locationY);
+
+            byte[] data = buffer.array();
+            DatagramPacket packet = new DatagramPacket(data, data.length, serverAddress, serverPort);
+            socket.send(packet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

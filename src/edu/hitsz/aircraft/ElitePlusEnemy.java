@@ -13,7 +13,7 @@ public class ElitePlusEnemy extends AbstractAircraft {
 
     @Override
     public List<BaseBullet> shoot() {
-        res = new LinkedList<>();
+        List<BaseBullet> res = new LinkedList<>();
         return res;
     }
 }

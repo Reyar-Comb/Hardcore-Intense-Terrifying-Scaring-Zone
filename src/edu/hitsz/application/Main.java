@@ -1,5 +1,7 @@
 package edu.hitsz.application;
 
+import edu.hitsz.network.Client;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -27,13 +29,12 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Game game = new Game();
-        frame.add(game);
-        frame.setVisible(true);
-        game.action();
 
         //start server
         try {
-            GameClient client = new GameClient("127.0.0.1", 8888);
+            Client client = new Client("127.0.0.1", 8888);
+
+            game.client = client;
 
             client.startListening();
 
@@ -42,5 +43,10 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        frame.add(game);
+        frame.setVisible(true);
+        game.action();
+
     }
 }
