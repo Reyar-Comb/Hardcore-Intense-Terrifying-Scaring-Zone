@@ -14,9 +14,10 @@ import java.util.List;
  */
 public class HeroAircraft extends PlayerAircraft {
 
-    public HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp, int playerId) {
-        super(locationX, locationY, speedX, speedY, hp, playerId);
+    public HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
+        super(locationX, locationY, speedX, speedY, hp);
     }
+
 
     @Override
     public void forward() {

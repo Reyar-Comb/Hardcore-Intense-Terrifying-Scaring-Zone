@@ -9,8 +9,11 @@ public class PlayerAircraft extends AbstractAircraft{
 
     public int playerId = 0;
 
-    public PlayerAircraft(int locationX, int locationY, int speedX, int speedY, int hp, int playerId) {
+    public PlayerAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+    }
+
+    public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
 

@@ -17,6 +17,8 @@ public class Client {
     private int PlayerId = -1;
     private boolean isRunning = true;
 
+    public RemotePlayerController remotePlayerController;
+
     public Client(String ip, int port) throws Exception {
         this.serverAddress = InetAddress.getByName(ip);
         this.serverPort = port;
@@ -57,8 +59,7 @@ public class Client {
                 int playerId = buffer.getInt();
                 int x = buffer.getInt();
                 int y = buffer.getInt();
-                System.out.printf(" %d is at %d %d", playerId, x, y);
-                RemotePlayerController.updateRemotePlayer(playerId, x, y, 100);
+                remotePlayerController.updateRemotePlayer(x, y, 100);
                 break;
 
         }

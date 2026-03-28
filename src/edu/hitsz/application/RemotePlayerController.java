@@ -14,23 +14,13 @@ public class RemotePlayerController {
         this.remotePlayerAircraft = remotePlayerAircraft;
     }
 
-
-    private final ConcurrentHashMap<Integer, RemotePlayerAircraft> remotePlayer = new ConcurrentHashMap<>();
-
-    public void updateRemotePlayer(int playerId, int locationX, int locationY, int Hp) {
-        RemotePlayerAircraft remote = remotePlayer.get(playerId);
-
-        if (remote == null)  {
-            remote = new RemotePlayerAircraft(locationX, locationY, 0, 0, Hp, playerId);
-            remotePlayer.put(playerId, remote);
-        } else {
-            remote.setLocation(locationX, locationY);
-            remote.setHp(Hp);
+    public void updateRemotePlayer(int locationX, int locationY, int Hp) {
+        if (locationX<0 || locationX>Main.WINDOW_WIDTH || locationY<0 || locationY>Main.WINDOW_HEIGHT){
+            // 防止超出边界
+            return;
         }
-    }
-
-    public RemotePlayerAircraft getRemotePlayerAircraft(int playerId) {
-        return remotePlayer.get(playerId);
+        remotePlayerAircraft.setLocation(locationX, locationY);
+        remotePlayerAircraft.setHp(Hp);
     }
 
 }

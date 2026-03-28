@@ -37,6 +37,8 @@ public class Game extends JPanel {
 
     public Client client;
 
+    public RemotePlayerController remotePlayerController;
+
 
     //英雄机和敌机射击周期
     protected double shootCycle = 20;
@@ -57,6 +59,7 @@ public class Game extends JPanel {
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
+        remotePlayerController = new RemotePlayerController(this, remotePlayerAircraft);
 
         this.timer = new Timer("game-action-timer", true);
 

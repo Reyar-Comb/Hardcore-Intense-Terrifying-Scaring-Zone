@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class RemotePlayerAircraft extends PlayerAircraft{
-    public RemotePlayerAircraft(int locationX, int locationY, int speedX, int speedY, int hp, int playerId) {
-        super(locationX, locationY, speedX, speedY, hp, playerId);
+    public RemotePlayerAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
+        super(locationX, locationY, speedX, speedY, hp);
     }
 
     @Override
