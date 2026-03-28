@@ -192,8 +192,8 @@ public class Game extends JPanel {
         g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2,
                 heroAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
 
-        g.drawImage(ImageManager.HERO_IMAGE, remotePlayerAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2,
-                remotePlayerAircraft.getLocationY() - ImageManager.HERO_IMAGE.getHeight() / 2, null);
+        g.drawImage(ImageManager.REMOTE_IMAGE, remotePlayerAircraft.getLocationX() - ImageManager.REMOTE_IMAGE.getWidth() / 2,
+                remotePlayerAircraft.getLocationY() - ImageManager.REMOTE_IMAGE.getHeight() / 2, null);
 
         //绘制得分和生命值
         paintScoreAndLife(g);

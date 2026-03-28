@@ -19,8 +19,12 @@ public class RemotePlayerController {
             // 防止超出边界
             return;
         }
-        remotePlayerAircraft.setLocation(locationX, locationY);
+        refineSetRemoteLocation(locationX, locationY);
         remotePlayerAircraft.setHp(Hp);
+    }
+
+    public void refineSetRemoteLocation(int locationX, int locationY) {
+        remotePlayerAircraft.setLocation(Main.WINDOW_WIDTH - locationX, Main.WINDOW_HEIGHT - locationY);
     }
 
 }
