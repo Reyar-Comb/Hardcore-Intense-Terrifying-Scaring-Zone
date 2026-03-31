@@ -4,6 +4,7 @@ import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.network.Client;
+import edu.hitsz.network.NetEvent;
 import edu.hitsz.prop.BaseProp;
 import edu.hitsz.prop.BloodProp;
 
@@ -13,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * 游戏主面板，游戏启动
@@ -35,7 +37,7 @@ public class Game extends JPanel {
 
     private final LinkedList<BaseBullet> heroBullets;
 
-    public Client client;
+    private final LinkedList<BaseBullet> remoteBullets;
 
     public RemotePlayerController remotePlayerController;
 
@@ -50,11 +52,13 @@ public class Game extends JPanel {
     //游戏结束标志
     private boolean gameOverFlag = false;
 
+
     public Game() {
         heroAircraft = new HeroAircraft(0, 0, 0, 0, 100);
         remotePlayerAircraft = new RemotePlayerAircraft(0, 0, 0, 0, 100);
 
         heroBullets = new LinkedList<>();
+        remoteBullets = new LinkedList<>();
         props = new LinkedList<>();
 
         //启动英雄机鼠标监听
@@ -74,6 +78,7 @@ public class Game extends JPanel {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                // 同步网络事件队列
                 updateStateAction();
                 // 后处理
                 postProcessAction();
@@ -81,6 +86,8 @@ public class Game extends JPanel {
                 repaint();
                 // 游戏结束检查
                 checkResultAction();
+                // 推送网络事件队列
+                syncStateAction();
             }
         };
         // 以固定延迟时间进行执行：本次任务执行完成后，延迟 timeInterval 再执行下一次
@@ -121,12 +128,18 @@ public class Game extends JPanel {
     }
 
     private void updateStateAction() {
-        client.updateState(
+        NetEvent event;
+        while ((event = Client.getInstance().pollEvent()) != null) {
+            event.apply(remotePlayerController);
+        }
+    }
+
+    private void syncStateAction() {
+        //sync location
+        Client.getInstance().updateLocation(
                 heroAircraft.getLocationX(),
-                heroAircraft.getLocationY(),
-                heroAircraft.getHp());
-
-
+                heroAircraft.getLocationY()
+        );
     }
 
 

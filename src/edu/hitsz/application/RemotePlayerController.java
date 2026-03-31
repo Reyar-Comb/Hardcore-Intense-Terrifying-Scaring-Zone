@@ -14,13 +14,12 @@ public class RemotePlayerController {
         this.remotePlayerAircraft = remotePlayerAircraft;
     }
 
-    public void updateRemotePlayer(int locationX, int locationY, int Hp) {
+    public void updateRemotePlayerLocation(int locationX, int locationY) {
         if (locationX<0 || locationX>Main.WINDOW_WIDTH || locationY<0 || locationY>Main.WINDOW_HEIGHT){
             // 防止超出边界
             return;
         }
         refineSetRemoteLocation(locationX, locationY);
-        remotePlayerAircraft.setHp(Hp);
     }
 
     public void refineSetRemoteLocation(int locationX, int locationY) {

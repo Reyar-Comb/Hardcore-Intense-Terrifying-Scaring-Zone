@@ -32,15 +32,9 @@ public class Main {
 
         //start server
         try {
-            Client client = new Client("127.0.0.1", 8888);
+            Client.getInstance().connect("127.0.0.1", 8888);
 
-            client.remotePlayerController = game.remotePlayerController;
-
-            game.client = client;
-
-            client.startListening();
-
-            client.sendJoinRequest();
+            Client.getInstance().sendJoinRequest();
 
         } catch (Exception e) {
             e.printStackTrace();
