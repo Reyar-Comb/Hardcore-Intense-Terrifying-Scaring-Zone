@@ -3,6 +3,10 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.enemyfactory.EliteEnemyFactory;
+import edu.hitsz.enemyfactory.ElitePlusEnemyFactory;
+import edu.hitsz.enemyfactory.EliteProEnemyFactory;
+import edu.hitsz.enemyfactory.MobEnemyFactory;
 import edu.hitsz.prop.BaseProp;
 import edu.hitsz.prop.BloodProp;
 
@@ -13,6 +17,8 @@ import java.util.*;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.*;
+
+import static edu.hitsz.prop.PropFactory.createProp;
 
 /**
  * 游戏主面板，游戏启动
@@ -33,6 +39,11 @@ public class Game extends JPanel {
     private final List<BaseBullet> enemyBullets;
     private final List<BaseProp> props;
 
+    private MobEnemyFactory mobEnemyFactory;
+    private EliteEnemyFactory eliteEnemyFactory;
+    private ElitePlusEnemyFactory elitePlusEnemyFactory;
+    private EliteProEnemyFactory eliteProEnemyFactory;
+
     //屏幕中出现的敌机最大数量
     private final int enemyMaxNumber = 5;
 
@@ -41,7 +52,9 @@ public class Game extends JPanel {
     private int enemySpawnCounter = 0;
 
     //敌机生成概率
-    private double eliteProb = 0.3;
+    private final double eliteProb = 0.6;
+    private final double elitePlusProb = 0.3;
+    private final double eliteProProb = 0.1;
 
     //英雄机和敌机射击周期
     protected double shootCycle = 20;
@@ -59,6 +72,11 @@ public class Game extends JPanel {
         heroBullets = new LinkedList<>();
         enemyBullets = new LinkedList<>();
         props = new LinkedList<>();
+
+        mobEnemyFactory = new MobEnemyFactory();
+        eliteEnemyFactory = new EliteEnemyFactory();
+        elitePlusEnemyFactory = new ElitePlusEnemyFactory();
+        eliteProEnemyFactory = new EliteProEnemyFactory();
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -81,7 +99,7 @@ public class Game extends JPanel {
                 if (enemySpawnCounter >=enemySpawnCycle) {
                     enemySpawnCounter = 0;
                     // 产生普通敌机
-                    geneateEnemy();
+                    generateEnemy();
 
                 }
 
@@ -114,32 +132,19 @@ public class Game extends JPanel {
     //***********************
 
     // 产生道具
-    private void generateProp(int locationX, int locationY, int speedX, int speedY) {
-        int new_speedY = (int) (speedY * 0.7);
-        props.add(new BloodProp(locationX, locationY, speedX, new_speedY));
-    }
 
     //产生敌机
-    private void geneateEnemy() {
+    private void generateEnemy() {
         if (enemyAircrafts.size() < enemyMaxNumber) {
             double rand = Math.random();
-            if (rand < eliteProb) {
-                enemyAircrafts.add(new EliteEnemy(
-                        (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
-                        (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                        0,
-                        10,
-                        30
-                ));
-            }
-            else {
-                enemyAircrafts.add(new MobEnemy(
-                        (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                        (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                        0,
-                        10,
-                        30
-                ));
+            if (rand < eliteProProb) {
+                enemyAircrafts.add(eliteProEnemyFactory.create());
+            } else if (rand < elitePlusProb) {
+                enemyAircrafts.add(elitePlusEnemyFactory.create());
+            } else if (rand < eliteProb) {
+                enemyAircrafts.add(eliteEnemyFactory.create());
+            } else {
+                enemyAircrafts.add(mobEnemyFactory.create());
             }
 
         }
@@ -216,13 +221,8 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
-                        if (!(enemyAircraft instanceof MobEnemy)) {
-                            generateProp(
-                                    enemyAircraft.getLocationX(),
-                                    enemyAircraft.getLocationY(),
-                                    enemyAircraft.getSpeedX(),
-                                    enemyAircraft.getSpeedY());
-                        }
+                        Optional<BaseProp> prop = enemyAircraft.createProp();
+                        prop.ifPresent(props::add);
 
                         score += 10;
                     }

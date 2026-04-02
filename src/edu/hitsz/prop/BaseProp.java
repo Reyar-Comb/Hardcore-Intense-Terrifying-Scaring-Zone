@@ -31,4 +31,5 @@ public abstract class BaseProp extends AbstractFlyingObject {
 
     public abstract void active();
 
+
 }

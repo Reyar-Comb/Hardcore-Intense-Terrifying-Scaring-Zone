@@ -2,7 +2,14 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.prop.BaseProp;
+import edu.hitsz.prop.PropFactory;
+import edu.hitsz.prop.PropType;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 所有种类飞机的抽象父类
@@ -47,6 +54,21 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      *  非可射击对象空实现，返回空列表
      */
     public abstract List<BaseBullet> shoot();
+
+    protected List<PropType> getDroppableProps() {
+        return Collections.emptyList();
+    }
+
+    public Optional<BaseProp> createProp() {
+        List<PropType> droppableProps = getDroppableProps();
+        if (droppableProps.isEmpty()) {
+            return Optional.empty();
+        }
+        int index = (int) (Math.random() * droppableProps.size());
+        PropType propType = droppableProps.get(index);
+        return Optional.of(PropFactory.createProp(propType, locationX, locationY, speedX, (int)(speedY * 0.5)));
+    }
+
 
 }
 

@@ -3,7 +3,10 @@ package edu.hitsz.aircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
+import edu.hitsz.prop.PropType;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class EliteEnemy extends AbstractAircraft{
         int x = this.getLocationX();
         int y = this.getLocationY() + direction*2;
         int speedX = 0;
-        int speedY = this.getSpeedY() + direction*10;
+        int speedY = this.getSpeedY() + direction*5;
         BaseBullet bullet;
         for(int i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移
@@ -41,6 +44,14 @@ public class EliteEnemy extends AbstractAircraft{
         return res;
     }
 
+    @Override
+    protected List<PropType> getDroppableProps() {
+        return Arrays.asList(
+            PropType.BLOOD,
+            PropType.BULLET,
+            PropType.BULLET_PLUS
+        );
+    }
 
 
 }
