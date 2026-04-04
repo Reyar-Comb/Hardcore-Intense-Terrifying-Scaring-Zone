@@ -24,7 +24,7 @@ public class Client {
     private InetAddress serverAddress;
     private int serverPort;
 
-    private int PlayerId = -1;
+    public int PlayerId = -1;
     private boolean isRunning = true;
 
     private final ConcurrentLinkedQueue<NetEvent> inboundQueue = new ConcurrentLinkedQueue<>();
@@ -118,7 +118,13 @@ public class Client {
                 ShootEvent event = new ShootEvent(locationX, locationY, speedX, speedY, power);
                 inboundQueue.offer(event);
                 break;
-
+            }
+            case 0x04: {
+                int playerId = buffer.getInt();
+                int hp = buffer.getInt();
+                PlayerHpEvent event = new PlayerHpEvent(playerId, hp);
+                inboundQueue.offer(event);
+                break;
             }
         }
     }
@@ -148,6 +154,15 @@ public class Client {
         buffer.putInt(bullet.getLocationY());
         buffer.putInt(bullet.getSpeedX());
         buffer.putInt(bullet.getSpeedY());
+        buffer.putInt(bullet.getPower());
+
+        sendPacket(buffer.array());
+    }
+
+    public void updateHitAction(BaseBullet bullet) {
+        ByteBuffer buffer = ByteBuffer.allocate(9);
+        buffer.put((byte) 0x06);
+        buffer.putInt(PlayerId);
         buffer.putInt(bullet.getPower());
 
         sendPacket(buffer.array());

@@ -31,4 +31,8 @@ public class RemotePlayerController {
     public void remotePlayerShoot(int locationX, int locationY, int speedX, int speedY, int power) {
         game.addRemoteBullet(new RemoteBullet(Main.WINDOW_WIDTH - locationX, Main.WINDOW_HEIGHT - locationY, -speedX, -speedY, power));
     }
+
+    public void updateRemotePlayerHp(int hp) {
+        remotePlayerAircraft.setHp(hp);
+    }
 }

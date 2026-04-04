@@ -2,6 +2,7 @@ package edu.hitsz.network;
 
 import edu.hitsz.aircraft.RemotePlayerAircraft;
 import edu.hitsz.application.Game;
+import edu.hitsz.application.LocalPlayerController;
 import edu.hitsz.application.RemotePlayerController;
 
 import java.rmi.Remote;
@@ -16,7 +17,7 @@ public class PlayerMoveEvent implements NetEvent{
     }
 
     @Override
-    public void apply(RemotePlayerController rpController) {
+    public void apply(RemotePlayerController rpController, LocalPlayerController lpController) {
         rpController.updateRemotePlayerLocation(X, Y);
     }
 }

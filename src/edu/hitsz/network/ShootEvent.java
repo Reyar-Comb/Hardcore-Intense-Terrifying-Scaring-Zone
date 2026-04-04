@@ -1,6 +1,6 @@
 package edu.hitsz.network;
 
-import edu.hitsz.aircraft.RemotePlayerAircraft;
+import edu.hitsz.application.LocalPlayerController;
 import edu.hitsz.application.RemotePlayerController;
 
 public class ShootEvent implements NetEvent {
@@ -19,7 +19,7 @@ public class ShootEvent implements NetEvent {
     }
 
     @Override
-    public void apply(RemotePlayerController rpController) {
+    public void apply(RemotePlayerController rpController, LocalPlayerController lpController) {
         rpController.remotePlayerShoot(X, Y, SpeedX, SpeedY, Power);
     }
 }

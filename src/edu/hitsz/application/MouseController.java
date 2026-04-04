@@ -10,12 +10,12 @@ import java.awt.event.MouseEvent;
  * 监听鼠标，控制英雄机的移动
  * @author hitsz
  */
-public class HeroController {
+public class MouseController {
     private Game game;
     private HeroAircraft heroAircraft;
     private MouseAdapter mouseAdapter;
 
-    public HeroController(Game game, HeroAircraft heroAircraft){
+    public MouseController(Game game, HeroAircraft heroAircraft){
         this.game = game;
         this.heroAircraft = heroAircraft;
 

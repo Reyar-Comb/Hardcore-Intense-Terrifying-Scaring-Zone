@@ -1,8 +1,9 @@
 package edu.hitsz.network;
 
 import edu.hitsz.application.Game;
+import edu.hitsz.application.LocalPlayerController;
 import edu.hitsz.application.RemotePlayerController;
 
 public interface NetEvent {
-    void apply(RemotePlayerController rpController);
+    void apply(RemotePlayerController rpController, LocalPlayerController lpController);
 }
