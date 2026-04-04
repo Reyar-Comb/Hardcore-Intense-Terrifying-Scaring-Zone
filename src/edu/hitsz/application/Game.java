@@ -175,7 +175,16 @@ public class Game extends JPanel {
                 continue;
             }
             if (remotePlayerAircraft.crash(bullet)) {
+                System.out.println("send hit");
                 Client.getInstance().updateHitAction(bullet);
+                bullet.vanish();
+            }
+        }
+        for (BaseBullet bullet : remoteBullets) {
+            if (bullet.notValid()) {
+                continue;
+            }
+            if (heroAircraft.crash(bullet)) {
                 bullet.vanish();
             }
         }
