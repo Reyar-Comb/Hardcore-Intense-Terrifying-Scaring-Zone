@@ -2,6 +2,7 @@ package edu.hitsz.network;
 
 import edu.hitsz.aircraft.RemotePlayerAircraft;
 import edu.hitsz.application.RemotePlayerController;
+import edu.hitsz.bullet.BaseBullet;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -93,20 +94,32 @@ public class Client {
         byte opCode = buffer.get();
 
         switch(opCode) {
-            case 0x02:
+            case 0x02: {
                 int assignedId = buffer.getInt();
                 this.PlayerId = assignedId;
                 System.out.println("Enter Room ! My ID is " + assignedId);
                 break;
-
-            case 0x03:
+            }
+            case 0x03: {
                 int playerId = buffer.getInt();
                 int x = buffer.getInt();
                 int y = buffer.getInt();
                 PlayerMoveEvent event = new PlayerMoveEvent(x, y);
                 inboundQueue.offer(event);
                 break;
+            }
+            case 0x05: {
+                int playerId = buffer.getInt();
+                int locationX = buffer.getInt();
+                int locationY = buffer.getInt();
+                int speedX = buffer.getInt();
+                int speedY = buffer.getInt();
+                int power = buffer.getInt();
+                ShootEvent event = new ShootEvent(locationX, locationY, speedX, speedY, power);
+                inboundQueue.offer(event);
+                break;
 
+            }
         }
     }
 
@@ -123,6 +136,19 @@ public class Client {
         buffer.putInt(PlayerId);
         buffer.putInt(locationX);
         buffer.putInt(locationY);
+
+        sendPacket(buffer.array());
+    }
+
+    public void updateShootAction(BaseBullet bullet) {
+        ByteBuffer buffer = ByteBuffer.allocate(25);
+        buffer.put((byte) 0x05);
+        buffer.putInt(PlayerId);
+        buffer.putInt(bullet.getLocationX());
+        buffer.putInt(bullet.getLocationY());
+        buffer.putInt(bullet.getSpeedX());
+        buffer.putInt(bullet.getSpeedY());
+        buffer.putInt(bullet.getPower());
 
         sendPacket(buffer.array());
     }

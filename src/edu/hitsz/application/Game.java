@@ -80,6 +80,9 @@ public class Game extends JPanel {
             public void run() {
                 // 同步网络事件队列
                 updateStateAction();
+
+                shootAction();
+                bulletsMoveAction();
                 // 后处理
                 postProcessAction();
                 // 重绘界面
@@ -111,12 +114,24 @@ public class Game extends JPanel {
         if (shootCounter >= shootCycle) {
             shootCounter = 0;
             //英雄机射击
-            heroBullets.addAll(heroAircraft.shoot());
+            List<BaseBullet> newBullets = heroAircraft.shoot();
+            heroBullets.addAll(newBullets);
+
+            for (BaseBullet bullet : newBullets) {
+                Client.getInstance().updateShootAction(bullet);
+            }
         }
+    }
+
+    public void addRemoteBullet(BaseBullet bullet) {
+        remoteBullets.add(bullet);
     }
 
     private void bulletsMoveAction() {
         for (BaseBullet bullet : heroBullets) {
+            bullet.forward();
+        }
+        for (BaseBullet bullet : remoteBullets) {
             bullet.forward();
         }
     }
@@ -162,6 +177,7 @@ public class Game extends JPanel {
      */
     private void postProcessAction() {
         heroBullets.removeIf(AbstractFlyingObject::notValid);
+        remoteBullets.removeIf(AbstractFlyingObject::notValid);
         props.removeIf(AbstractFlyingObject::notValid);
     }
 
@@ -198,6 +214,8 @@ public class Game extends JPanel {
 
         // 先绘制子弹，后绘制飞机
         // 这样子弹显示在飞机的下层
+        paintImageWithPositionRevised(g, heroBullets);
+        paintImageWithPositionRevised(g, remoteBullets);
 
         // Todo: 绘制道具
         paintImageWithPositionRevised(g, props);

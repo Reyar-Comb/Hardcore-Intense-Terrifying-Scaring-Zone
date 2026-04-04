@@ -2,6 +2,8 @@ package edu.hitsz.application;
 
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.aircraft.RemotePlayerAircraft;
+import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.bullet.RemoteBullet;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,4 +28,7 @@ public class RemotePlayerController {
         remotePlayerAircraft.setLocation(Main.WINDOW_WIDTH - locationX, Main.WINDOW_HEIGHT - locationY);
     }
 
+    public void remotePlayerShoot(int locationX, int locationY, int speedX, int speedY, int power) {
+        game.addRemoteBullet(new RemoteBullet(Main.WINDOW_WIDTH - locationX, Main.WINDOW_HEIGHT - locationY, -speedX, -speedY, power));
+    }
 }

@@ -2,7 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.EnemyBullet;
+import edu.hitsz.bullet.RemoteBullet;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class EliteEnemy extends AbstractAircraft{
         for(int i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
-            bullet = new EnemyBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
+            bullet = new RemoteBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
             res.add(bullet);
         }
         return res;
