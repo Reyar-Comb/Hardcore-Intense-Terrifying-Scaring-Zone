@@ -1,0 +1,38 @@
+@startuml
+title Factory Method Pattern
+
+interface IEnemyFactory {
++ create():AbstractAircraft
+}
+
+class MobEnemyFactory
+class EliteEnemyFactory
+class ElitePlusEnemyFactory
+class EliteProEnemyFactory
+class BossFactory
+
+IEnemyFactory <|.. MobEnemyFactory
+IEnemyFactory <|.. EliteEnemyFactory
+IEnemyFactory <|.. ElitePlusEnemyFactory
+IEnemyFactory <|.. EliteProEnemyFactory
+IEnemyFactory <|.. BossFactory
+
+abstract class AbstractAircraft
+class MobEnemy
+class EliteEnemy
+class ElitePlusEnemy
+class EliteProEnemy
+class Boss
+
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- EliteEnemy
+AbstractAircraft <|-- ElitePlusEnemy
+AbstractAircraft <|-- EliteProEnemy
+AbstractAircraft <|-- Boss
+
+MobEnemyFactory ..> MobEnemy
+EliteEnemyFactory ..> EliteEnemy
+ElitePlusEnemyFactory ..> ElitePlusEnemy
+EliteProEnemyFactory ..> EliteProEnemy
+BossFactory ..> Boss
+@enduml

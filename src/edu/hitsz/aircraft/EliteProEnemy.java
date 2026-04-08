@@ -14,8 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EliteProEnemy extends AbstractAircraft {
-    private int shootNum = 3;
-    private int power = 30;
     public EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
         this.direction = 1;

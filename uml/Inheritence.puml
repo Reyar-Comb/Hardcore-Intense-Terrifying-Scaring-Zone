@@ -29,30 +29,60 @@ abstract class AbstractAircraft
 {
 	# maxHp:int
     # hp:int
+    + direction:int
+    - shootStrategy:IShootStrategy
     + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + decreaseHp(int decrease):void
+    + increaseHp(int increase, int max):void
     + getHp():int
-    + {abstract} shoot():List<BaseBullet>
+    + shoot():List<BaseBullet>
+    # getDroppableProps():List<PropType>
+    + createProp():Optional<BaseProp>
+    + setShootStrategy(IShootStrategy strategy):void
  }
 
 
 class HeroAircraft {
-    - shootNum:int
-    - power:int
-    - direction:int
+    - instance:HeroAircraft {static}
+    + getInstance():HeroAircraft {static}
     + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward():void
-    + shoot():List<BaseBullet>
 }
-
 AbstractAircraft <|-- HeroAircraft
 
 class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward():void
-    + shoot():List<BaseBullet>
 }
 AbstractAircraft <|-- MobEnemy
+
+class EliteEnemy {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + getDroppableProps():List<PropType>
+}
+AbstractAircraft <|-- EliteEnemy
+
+class ElitePlusEnemy {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + getDroppableProps():List<PropType>
+}
+AbstractAircraft <|-- ElitePlusEnemy
+
+class EliteProEnemy {
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + getDroppableProps():List<PropType>
+}
+AbstractAircraft <|-- EliteProEnemy
+
+class Boss {
+    + Boss(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + getDroppableProps():List<PropType>
+}
+AbstractAircraft <|-- Boss
 
 abstract class BaseBullet
 {
@@ -75,7 +105,45 @@ class EnemyBullet {
 BaseBullet <|-- HeroBullet
 BaseBullet <|-- EnemyBullet
 
+class BaseProp {
+    + BaseProp(int locationX, int locationY, int speedX, int speedY),
+    + forward():void
+    + active():void{abstract}
+}
+
+class BloodProp {
+    - heroAircraft:HeroAircraft
+    + BloodProp(int locationX, int locationY, int speedX, int speedY)
+    + active():void
+}
+BaseProp <|-- BloodProp
+
+class BulletProp {
+    + BulletProp(int locationX, int locationY, int speedX, int speedY)
+    + active():void
+}
+BaseProp <|-- BulletProp
+
+class BulletPlusProp {
+    + BulletPlusProp(int locationX, int locationY, int speedX, int speedY)
+    + active():void
+}
+BaseProp <|-- BulledPlusProp
+
+class BombProp {
+    + BombProp(int locationX, int locationY, int speedX, int speedY)
+    + active():void
+}
+BaseProp <|-- BombProp
+
+class FreezeProp {
+    + FreezeProp(int locationX, int locationY, int speedX, int speedY)
+    + active():void
+}
+BaseProp <|-- FreezeProp
+
 AbstractFlyingObject <|-- AbstractAircraft
 AbstractFlyingObject <|-- BaseBullet
+AbstractFlyingObject <|-- BaseProp
 
 @enduml

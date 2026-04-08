@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+title Singleton Pattern
+
+  abstract class AbstractAircraft
+  class HeroAircraft {
+    - instance:HeroAircraft {static}
+    - HeroAircraft(int locationX, int
+  locationY, int speedX, int speedY, int
+  hp)
+    + getInstance():HeroAircraft
+  {static}
+    + forward():void
+  }
+
+  AbstractAircraft <|-- HeroAircraft
+
+@enduml

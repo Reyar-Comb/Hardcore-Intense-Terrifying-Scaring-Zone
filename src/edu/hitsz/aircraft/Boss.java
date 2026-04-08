@@ -3,8 +3,10 @@ package edu.hitsz.aircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.prop.PropType;
 import edu.hitsz.shootStrategy.CircularShoot;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,5 +26,15 @@ public class Boss extends AbstractAircraft {
         }
     }
 
+    @Override
+    protected List<PropType> getDroppableProps() {
+        return Arrays.asList(
+                PropType.BLOOD,
+                PropType.BULLET,
+                PropType.BULLET_PLUS,
+                PropType.BOMB,
+                PropType.FREEZE
+        );
+    }
 
 }

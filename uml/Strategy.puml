@@ -1,0 +1,27 @@
+  @startuml
+  title Strategy Pattern
+
+  interface IShootStrategy {
+    + shoot(aircraft:AbstractAircraft):List<BaseBullet>
+  }
+
+  class SimpleShoot
+  class DoubleShoot
+  class ScatterShoot
+  class CircularShoot
+  class NullShoot
+
+  IShootStrategy <|.. SimpleShoot
+  IShootStrategy <|.. DoubleShoot
+  IShootStrategy <|.. ScatterShoot
+  IShootStrategy <|.. CircularShoot
+  IShootStrategy <|.. NullShoot
+
+  abstract class AbstractAircraft {
+    - shootStrategy:IShootStrategy
+    + setShootStrategy(strategy:IShootStrategy):void
+    + shoot():List<BaseBullet>
+  }
+
+  AbstractAircraft o--> IShootStrategy
+  @enduml
