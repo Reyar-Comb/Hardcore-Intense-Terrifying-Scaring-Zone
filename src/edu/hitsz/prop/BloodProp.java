@@ -12,6 +12,6 @@ public class BloodProp  extends BaseProp{
 
     @Override
     public void active() {
-        heroAircraft.increaseHp(40, 100);
+        heroAircraft.increaseHp(100, 10000);
     }
 }

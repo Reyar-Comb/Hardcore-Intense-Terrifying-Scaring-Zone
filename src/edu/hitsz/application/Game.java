@@ -3,10 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.enemyfactory.EliteEnemyFactory;
-import edu.hitsz.enemyfactory.ElitePlusEnemyFactory;
-import edu.hitsz.enemyfactory.EliteProEnemyFactory;
-import edu.hitsz.enemyfactory.MobEnemyFactory;
+import edu.hitsz.enemyfactory.*;
 import edu.hitsz.prop.BaseProp;
 import edu.hitsz.prop.BloodProp;
 
@@ -43,6 +40,7 @@ public class Game extends JPanel {
     private EliteEnemyFactory eliteEnemyFactory;
     private ElitePlusEnemyFactory elitePlusEnemyFactory;
     private EliteProEnemyFactory eliteProEnemyFactory;
+    private BossFactory bossFactory;
 
     //屏幕中出现的敌机最大数量
     private final int enemyMaxNumber = 5;
@@ -63,6 +61,8 @@ public class Game extends JPanel {
     //当前玩家分数
     private int score = 0;
 
+    private int bossScore = 100;
+
     //游戏结束标志
     private boolean gameOverFlag = false;
 
@@ -77,6 +77,7 @@ public class Game extends JPanel {
         eliteEnemyFactory = new EliteEnemyFactory();
         elitePlusEnemyFactory = new ElitePlusEnemyFactory();
         eliteProEnemyFactory = new EliteProEnemyFactory();
+        bossFactory = new BossFactory();
 
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
@@ -96,6 +97,10 @@ public class Game extends JPanel {
             public void run() {
 
                 enemySpawnCounter++;
+                if (score > bossScore) {
+                    generateBoss();
+                }
+
                 if (enemySpawnCounter >=enemySpawnCycle) {
                     enemySpawnCounter = 0;
                     // 产生普通敌机
@@ -147,6 +152,13 @@ public class Game extends JPanel {
                 enemyAircrafts.add(mobEnemyFactory.create());
             }
 
+        }
+    }
+
+    private void generateBoss() {
+        if (!bossFactory.IsCreated) {
+            enemyAircrafts.add(bossFactory.create());
+            bossFactory.IsCreated = true;
         }
     }
 
@@ -219,6 +231,13 @@ public class Game extends JPanel {
                     // 敌机损失一定生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
+                    if (enemyAircraft.notValid() && enemyAircraft instanceof Boss) {
+                        for (int i = 0; i < 3; i++ ) {
+                            Optional<BaseProp> prop = enemyAircraft.createProp();
+                            prop.ifPresent(props::add);
+                        }
+                        score += 114514;
+                    }
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
                         Optional<BaseProp> prop = enemyAircraft.createProp();

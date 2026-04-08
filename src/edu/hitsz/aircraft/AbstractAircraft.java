@@ -5,6 +5,7 @@ import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.prop.BaseProp;
 import edu.hitsz.prop.PropFactory;
 import edu.hitsz.prop.PropType;
+import edu.hitsz.shootStrategy.IShootStrategy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,8 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     //最大生命值
     protected int maxHp;
     protected int hp;
+
+    public int direction = 1;
 
     public AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY);
@@ -53,7 +56,9 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      *  可射击对象需实现，返回子弹列表
      *  非可射击对象空实现，返回空列表
      */
-    public abstract List<BaseBullet> shoot();
+    public List<BaseBullet> shoot() {
+        return shootStrategy.shoot(this);
+    }
 
     protected List<PropType> getDroppableProps() {
         return Collections.emptyList();
@@ -69,6 +74,11 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         return Optional.of(PropFactory.createProp(propType, locationX, locationY, speedX, (int)(speedY * 0.5)));
     }
 
+    private IShootStrategy shootStrategy;
+
+    public void setShootStrategy(IShootStrategy strategy) {
+        this.shootStrategy = strategy;
+    }
 
 }
 

@@ -1,6 +1,10 @@
 package edu.hitsz.prop;
 
 
+import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.shootStrategy.CircularShoot;
+import edu.hitsz.shootStrategy.ScatterShoot;
+
 public class BulletProp  extends BaseProp{
 
     public BulletProp(int locationX, int locationY, int speedX, int speedY) {
@@ -9,6 +13,6 @@ public class BulletProp  extends BaseProp{
 
     @Override
     public void active() {
-        System.out.println("Collected Bullet");
+        HeroAircraft.getInstance().setShootStrategy(new ScatterShoot());
     }
 }
