@@ -3,9 +3,10 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.dataAccess.ScoreRecordDao;
+import edu.hitsz.dataAccess.ScoreRecordDaoImpl;
 import edu.hitsz.enemyfactory.*;
 import edu.hitsz.prop.BaseProp;
-import edu.hitsz.prop.BloodProp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +14,6 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.concurrent.*;
-
-import static edu.hitsz.prop.PropFactory.createProp;
 
 /**
  * 游戏主面板，游戏启动
@@ -62,6 +60,8 @@ public class Game extends JPanel {
     private int score = 0;
 
     private int bossScore = 100;
+
+    private final ScoreRecordDao dao = new ScoreRecordDaoImpl();
 
     //游戏结束标志
     private boolean gameOverFlag = false;
@@ -291,6 +291,8 @@ public class Game extends JPanel {
             timer.cancel(); // 取消定时器并终止所有调度任务
             gameOverFlag = true;
             System.out.println("Game Over!");
+            dao.addRecord(score, "fuck", "normal");
+            dao.showRecords("normal");
         }
     };
 

@@ -1,0 +1,50 @@
+@startuml
+title DAO Pattern
+
+interface ScoreRecordDao {
+  + addRecord(score:int, username:String, difficulty:String):void
+  + deleteRecord(scoreRecord:ScoreRecord):void
+  + showRecords(difficulty:String):void
+}
+
+class ScoreRecordDaoImpl {
+  + addRecord(score:int, username:String, difficulty:String):void
+  + deleteRecord(scoreRecord:ScoreRecord):void
+  + showRecords(difficulty:String):void
+  - formatPrintRecords(records:List<ScoreRecord>):void
+  - getSortedRecords(difficult:String):List<ScoreRecord>
+  - readRecords(dataPath:String):List<ScoreRecord>
+  - writeRecord(dataPath:String, records:List<ScoreRecord>):void
+  - getDir(record:ScoreRecord):String
+}
+
+class ScoreRecord {
+  + userName:String
+  + score:int
+  + time:String
+  + difficulty:String
+  + compareTo(r:ScoreRecord):int
+  + toString():String
+}
+
+class Game {
+  - score:int
+  - dao:ScoreRecordDao
+  - checkResultAction():void
+}
+
+ScoreRecordDao <|.. ScoreRecordDaoImpl
+ScoreRecordDaoImpl ..> ScoreRecord : creates/uses
+Game ..> ScoreRecordDao : uses
+
+note right of ScoreRecordDaoImpl
+showRecords prints ranking with index
+1, 2, 3 ...
+end note
+
+note right of ScoreRecordDaoImpl
+data file path:
+database/<difficulty>.json
+end note
+
+@enduml
