@@ -28,21 +28,35 @@ public class Main {
                 WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Game game = new Game();
+        LoginPanel loginPanel = new LoginPanel((sessionId, username) -> {
+            Client.getInstance().sessionId = sessionId;
+            StartPanel startPanel = new StartPanel(username, () -> {
 
-        //start server
-        try {
-            Client.getInstance().connect("127.0.0.1", 8888);
 
-            Client.getInstance().sendJoinRequest();
+                try {
+                    Client.getInstance().connect("127.0.0.1", 8888);
+                    Client.getInstance().onAccepted = () -> {
+                        SwingUtilities.invokeLater(() -> {
+                            Game game = new Game();
+                            frame.setContentPane(game);
+                            frame.revalidate();
+                            game.action();
+                        });
+                    };
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                    Client.getInstance().sendJoinRequest();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
-        frame.add(game);
+            SwingUtilities.invokeLater(() -> {
+                frame.setContentPane(startPanel);
+                frame.revalidate();
+            });
+        });
+
+        frame.setContentPane(loginPanel);
         frame.setVisible(true);
-        game.action();
-
     }
 }

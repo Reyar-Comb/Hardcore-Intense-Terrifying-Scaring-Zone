@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
@@ -24,6 +25,8 @@ public class Client {
     private InetAddress serverAddress;
     private int serverPort;
 
+    public String sessionId;
+
     public int PlayerId = -1;
     private boolean isRunning = true;
 
@@ -31,6 +34,7 @@ public class Client {
 
     private final ConcurrentLinkedQueue<byte[]> outboundQueue = new ConcurrentLinkedQueue<>();
 
+    public Runnable onAccepted;
 
     public void connect(String ip, int port) throws Exception {
         this.serverAddress = InetAddress.getByName(ip);
@@ -97,6 +101,7 @@ public class Client {
             case 0x02: {
                 int assignedId = buffer.getInt();
                 this.PlayerId = assignedId;
+                this.onAccepted.run();
                 System.out.println("Enter Room ! My ID is " + assignedId);
                 break;
             }
@@ -130,8 +135,11 @@ public class Client {
     }
 
     public void sendJoinRequest() {
-        ByteBuffer buffer = ByteBuffer.allocate(1);
+        byte[] sessionBytes = sessionId.getBytes(StandardCharsets.UTF_8);
+        ByteBuffer buffer = ByteBuffer.allocate(1 + 4 + sessionBytes.length);
         buffer.put((byte) 0x01);
+        buffer.putInt(sessionBytes.length);
+        buffer.put(sessionBytes);
         sendPacket(buffer.array());
         System.out.println("SendingRequest");
     }
