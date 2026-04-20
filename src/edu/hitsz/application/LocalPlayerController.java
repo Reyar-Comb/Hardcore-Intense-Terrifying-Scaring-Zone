@@ -14,4 +14,9 @@ public class LocalPlayerController {
     public void updateLocalPlayerHp(int Hp) {
         heroAircraft.setHp(Hp);
     }
+
+    public void GameOver(boolean isWinner) {
+        game.GameOver(isWinner);
+    }
 }
+

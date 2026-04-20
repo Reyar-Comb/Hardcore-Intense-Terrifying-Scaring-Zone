@@ -98,6 +98,7 @@ public class Client {
         byte opCode = buffer.get();
 
         switch(opCode) {
+            // Join Game
             case 0x02: {
                 int assignedId = buffer.getInt();
                 this.PlayerId = assignedId;
@@ -105,6 +106,8 @@ public class Client {
                 System.out.println("Enter Room ! My ID is " + assignedId);
                 break;
             }
+
+            // Sync Location
             case 0x03: {
                 int playerId = buffer.getInt();
                 int x = buffer.getInt();
@@ -113,6 +116,17 @@ public class Client {
                 inboundQueue.offer(event);
                 break;
             }
+
+            // Update HP
+            case 0x04: {
+                int playerId = buffer.getInt();
+                int hp = buffer.getInt();
+                PlayerHpEvent event = new PlayerHpEvent(playerId, hp);
+                inboundQueue.offer(event);
+                break;
+            }
+
+            // Sync Shoot
             case 0x05: {
                 int playerId = buffer.getInt();
                 int locationX = buffer.getInt();
@@ -124,13 +138,15 @@ public class Client {
                 inboundQueue.offer(event);
                 break;
             }
-            case 0x04: {
-                int playerId = buffer.getInt();
-                int hp = buffer.getInt();
-                PlayerHpEvent event = new PlayerHpEvent(playerId, hp);
+
+            // Sync Game Over
+            case 0x07: {
+                int winnerId = buffer.getInt();
+                GameOverEvent event = new GameOverEvent(winnerId);
                 inboundQueue.offer(event);
                 break;
             }
+
         }
     }
 

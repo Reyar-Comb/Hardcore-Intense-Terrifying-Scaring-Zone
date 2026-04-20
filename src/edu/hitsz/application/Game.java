@@ -92,8 +92,7 @@ public class Game extends JPanel {
                 postProcessAction();
                 // 重绘界面
                 repaint();
-                // 游戏结束检查
-                checkResultAction();
+
                 // 推送网络事件队列
                 syncStateAction();
             }
@@ -206,12 +205,14 @@ public class Game extends JPanel {
     /**
      * 检查游戏是否结束，若结束：关闭线程池
      */
-    private void checkResultAction(){
-        // 游戏结束检查英雄机是否存活
-        if (heroAircraft.getHp() <= 0) {
-            timer.cancel(); // 取消定时器并终止所有调度任务
-            gameOverFlag = true;
-            System.out.println("Game Over!");
+    public void GameOver(boolean isWinner) {
+        System.out.println("Game Over!");
+        timer.cancel(); // 取消定时器并终止所有调度任务
+        gameOverFlag = true;
+        if (isWinner) {
+            System.out.println("You Win!");
+        } else {
+            System.out.println("You Lose!");
         }
     };
 
