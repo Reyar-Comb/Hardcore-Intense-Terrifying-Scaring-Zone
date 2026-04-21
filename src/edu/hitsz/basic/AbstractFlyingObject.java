@@ -3,6 +3,7 @@ package edu.hitsz.basic;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
+import edu.hitsz.ui.MainFrame;
 
 import java.awt.image.BufferedImage;
 
@@ -49,7 +50,7 @@ public abstract class AbstractFlyingObject {
     public void forward() {
         locationX += speedX;
         locationY += speedY;
-        if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
+        if (locationX <= 0 || locationX >= MainFrame.WINDOW_WIDTH) {
             // 横向超出边界后反向
             speedX = -speedX;
         }

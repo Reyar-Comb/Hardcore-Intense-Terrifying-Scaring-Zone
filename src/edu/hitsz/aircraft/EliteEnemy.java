@@ -5,6 +5,7 @@ import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.prop.PropType;
 import edu.hitsz.shootStrategy.SimpleShoot;
+import edu.hitsz.ui.MainFrame;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class EliteEnemy extends AbstractAircraft{
     public void forward() {
         super.forward();
         // 判定 y 轴向下飞行出界
-        if (locationY >= Main.WINDOW_HEIGHT ) {
+        if (locationY >= MainFrame.WINDOW_HEIGHT ) {
             vanish();
         }
     }

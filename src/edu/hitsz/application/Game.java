@@ -7,6 +7,7 @@ import edu.hitsz.dataAccess.ScoreRecordDao;
 import edu.hitsz.dataAccess.ScoreRecordDaoImpl;
 import edu.hitsz.enemyfactory.*;
 import edu.hitsz.prop.BaseProp;
+import edu.hitsz.ui.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,12 +58,16 @@ public class Game extends JPanel {
     private int shootCounter = 0;
 
     //当前玩家分数
-    private int score = 0;
+    public int score = 0;
 
     private int bossScore = 100;
 
-    private final ScoreRecordDao dao = new ScoreRecordDaoImpl();
+    public final ScoreRecordDao dao = new ScoreRecordDaoImpl();
 
+    // d
+    public String difficulty = "easy";
+
+    public MainFrame mainFrame;
     //游戏结束标志
     private boolean gameOverFlag = false;
 
@@ -292,7 +297,9 @@ public class Game extends JPanel {
             gameOverFlag = true;
             System.out.println("Game Over!");
             dao.addRecord(score, "fuck", "normal");
-            dao.showRecords("normal");
+
+            mainFrame.leaderBoard.RefreshTable(this);
+            mainFrame.cardLayout.show(mainFrame.mainContainer, "leaderBoard");
         }
     };
 
@@ -308,10 +315,10 @@ public class Game extends JPanel {
         super.paint(g);
 
         // 绘制背景,图片滚动
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop, null);
+        paintBG(g);
+
         this.backGroundTop += 1;
-        if (this.backGroundTop == Main.WINDOW_HEIGHT) {
+        if (this.backGroundTop == MainFrame.WINDOW_HEIGHT) {
             this.backGroundTop = 0;
         }
 
@@ -330,6 +337,26 @@ public class Game extends JPanel {
         //绘制得分和生命值
         paintScoreAndLife(g);
 
+    }
+
+    private void paintBG(Graphics g) {
+        switch (difficulty) {
+            case "easy": {
+                g.drawImage(ImageManager.BACKGROUND_IMAGE_EASY, 0, this.backGroundTop - MainFrame.WINDOW_HEIGHT, null);
+                g.drawImage(ImageManager.BACKGROUND_IMAGE_EASY, 0, this.backGroundTop, null);
+                break;
+            }
+            case "normal": {
+                g.drawImage(ImageManager.BACKGROUND_IMAGE_NORMAL, 0, this.backGroundTop - MainFrame.WINDOW_HEIGHT, null);
+                g.drawImage(ImageManager.BACKGROUND_IMAGE_NORMAL, 0, this.backGroundTop, null);
+                break;
+            }
+            case "hard": {
+                g.drawImage(ImageManager.BACKGROUND_IMAGE_HARD, 0, this.backGroundTop - MainFrame.WINDOW_HEIGHT, null);
+                g.drawImage(ImageManager.BACKGROUND_IMAGE_HARD, 0, this.backGroundTop, null);
+                break;
+            }
+        }
     }
 
     private void paintImageWithPositionRevised(Graphics g, List<? extends AbstractFlyingObject> objects) {
@@ -353,6 +380,23 @@ public class Game extends JPanel {
         g.drawString("SCORE: " + this.score, x, y);
         y = y + 20;
         g.drawString("LIFE: " + this.heroAircraft.getHp(), x, y);
+    }
+
+    public void SetDifficulty(String difficulty) {
+        switch (difficulty) {
+            case "easy": {
+                this.difficulty = "easy";
+                break;
+            }
+            case "normal": {
+                this.difficulty = "normal";
+                break;
+            }
+            case "hard": {
+                this.difficulty = "hard";
+                break;
+            }
+        }
     }
 
 }

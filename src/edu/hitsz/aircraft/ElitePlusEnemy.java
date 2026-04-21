@@ -8,6 +8,7 @@ import edu.hitsz.prop.PropType;
 import edu.hitsz.shootStrategy.DoubleShoot;
 import edu.hitsz.shootStrategy.NullShoot;
 import edu.hitsz.shootStrategy.SimpleShoot;
+import edu.hitsz.ui.MainFrame;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class ElitePlusEnemy extends AbstractAircraft {
     public void forward() {
         super.forward();
         // 判定 y 轴向下飞行出界
-        if (locationY >= Main.WINDOW_HEIGHT ) {
+        if (locationY >= MainFrame.WINDOW_HEIGHT ) {
             vanish();
         }
     }

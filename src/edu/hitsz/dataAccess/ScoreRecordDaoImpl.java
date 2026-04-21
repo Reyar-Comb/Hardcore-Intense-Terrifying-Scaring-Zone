@@ -23,10 +23,15 @@ public class ScoreRecordDaoImpl implements ScoreRecordDao {
         writeRecord(dataDir, records);
     }
 
-    public void deleteRecord(ScoreRecord scoreRecord) {
-        String dataDir = getDir(scoreRecord);
+    public void deleteRecord(String difficulty, String time) {
+        String dataDir = getDir(difficulty);
         List<ScoreRecord> records = readRecords(dataDir);
-        records.remove(scoreRecord);
+        for (ScoreRecord record : records) {
+            if (record.time.equals(time)){
+                records.remove(record);
+                break;
+            }
+        }
         writeRecord(dataDir, records);
     }
 
@@ -34,6 +39,9 @@ public class ScoreRecordDaoImpl implements ScoreRecordDao {
         formatPrintRecords(getSortedRecords(difficulty));
     }
 
+    public String[][] getRecords(String difficulty) {
+        return formatGetRecords(getSortedRecords(difficulty));
+    }
     private static void formatPrintRecords(List<ScoreRecord> records){
         StringBuilder sb = new StringBuilder();
         int i = 1;
@@ -45,9 +53,24 @@ public class ScoreRecordDaoImpl implements ScoreRecordDao {
         System.out.println(sb.toString());
     }
 
+    private static String[][] formatGetRecords(List<ScoreRecord> records){
+        String[][] strings = new String[records.size()][5];
+        int i = 0;
+        for (ScoreRecord record : records){
+            String[] current = new String[5];
+            current[0] = Integer.toString(i+1);
+            current[1] = record.userName;
+            current[2] = Integer.toString(record.score);
+            current[3] = record.time;
+            current[4] = record.difficulty;
+            strings[i] = current;
+            i++;
+        }
+        return strings;
+    }
+
     private static List<ScoreRecord> getSortedRecords(String difficult) {
-        String dataDir = getDir(new ScoreRecord("", 0, "", difficult));
-        List<ScoreRecord> records = readRecords(dataDir);
+        List<ScoreRecord> records = readRecords(getDir(difficult));
         Collections.sort(records);
         return records;
     }
@@ -77,5 +100,14 @@ public class ScoreRecordDaoImpl implements ScoreRecordDao {
 
     private static String getDir(ScoreRecord record){
         return Paths.get("database", record.difficulty + ".json").toString();
+    }
+
+    private static String getDir(String difficulty){
+        return Paths.get("database", difficulty + ".json").toString();
+    }
+
+    public static int getRecordSize(String difficulty) {
+        List<ScoreRecord> records = readRecords(getDir(difficulty));
+        return records.size();
     }
 }

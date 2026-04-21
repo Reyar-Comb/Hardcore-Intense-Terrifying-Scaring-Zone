@@ -7,6 +7,7 @@ import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.prop.BaseProp;
 import edu.hitsz.shootStrategy.CircularShoot;
 import edu.hitsz.shootStrategy.SimpleShoot;
+import edu.hitsz.ui.MainFrame;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,8 +28,8 @@ public class HeroAircraft extends AbstractAircraft {
     public static HeroAircraft getInstance() {
         if (instance == null) {
             instance = new HeroAircraft(
-                    Main.WINDOW_WIDTH / 2,
-                    Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
+                    MainFrame.WINDOW_WIDTH / 2,
+                    MainFrame.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
                     0, 0, 100
             );
             instance.direction = -1;

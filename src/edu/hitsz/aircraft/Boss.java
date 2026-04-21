@@ -5,6 +5,7 @@ import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.PropType;
 import edu.hitsz.shootStrategy.CircularShoot;
+import edu.hitsz.ui.MainFrame;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -20,7 +21,7 @@ public class Boss extends AbstractAircraft {
     @Override
     public void forward() {
         locationX += speedX;
-        if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
+        if (locationX <= 0 || locationX >= MainFrame.WINDOW_WIDTH) {
             // 横向超出边界后反向
             speedX = -speedX;
         }
