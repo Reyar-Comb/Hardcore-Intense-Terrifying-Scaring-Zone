@@ -24,6 +24,17 @@ public class LeaderBoard extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(leaderBoard, BorderLayout.CENTER);
 
+        String[] columnName = {"Rank", "Username","Score","Difficulty","Time"};
+        String[][] tableData= {};
+
+        //表格模型
+        DefaultTableModel model = new DefaultTableModel(tableData, columnName){
+            @Override
+            public boolean isCellEditable(int row, int col){
+                return false;
+            }
+        };
+
         scroll.setViewportView(scoreBoard);
 
         uploadButton.addActionListener(e -> {
@@ -33,8 +44,14 @@ public class LeaderBoard extends JPanel {
 
         deleteButton.addActionListener(e -> {
             int row = scoreBoard.getSelectedRow();
-            dao.deleteRecord()
-        })
+            int result = JOptionPane.showConfirmDialog(deleteButton,
+                    "Sure?");
+            if (JOptionPane.YES_OPTION == result && row != -1) {
+                dao.deleteRecord(scoreBoard.getValueAt(row, 3).toString(), scoreBoard.getValueAt(row, 4).toString());
+                RefreshTable(gamePanel);
+            }
+
+        });
     }
 
     public void RefreshTable(Game gamePanel){

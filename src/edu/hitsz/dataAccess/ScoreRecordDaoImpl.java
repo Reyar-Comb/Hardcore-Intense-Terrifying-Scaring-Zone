@@ -61,8 +61,8 @@ public class ScoreRecordDaoImpl implements ScoreRecordDao {
             current[0] = Integer.toString(i+1);
             current[1] = record.userName;
             current[2] = Integer.toString(record.score);
-            current[3] = record.time;
-            current[4] = record.difficulty;
+            current[3] = record.difficulty;
+            current[4] = record.time;
             strings[i] = current;
             i++;
         }
