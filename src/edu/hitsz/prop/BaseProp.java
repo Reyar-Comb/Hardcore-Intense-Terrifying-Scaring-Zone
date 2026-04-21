@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.application.Main;
+import edu.hitsz.audio.AudioManager;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.ui.MainFrame;
 
@@ -13,6 +14,17 @@ public abstract class BaseProp extends AbstractFlyingObject {
     public final double resistance = 0.7;
     public BaseProp( int locationX, int locationY, int speedX, int speedY){
         super(locationX, locationY, speedX, speedY);
+    }
+
+    public void startTimer() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                this.deactive();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
     @Override
     public void forward() {
@@ -30,7 +42,12 @@ public abstract class BaseProp extends AbstractFlyingObject {
         }
     }
 
-    public abstract void active();
+    public void active() {
+        AudioManager.getInstance().PlaySFX("prop");
+        startTimer();
+    };
+
+    public void deactive() {}
 
 
 }

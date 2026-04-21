@@ -1,6 +1,7 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.*;
+import edu.hitsz.audio.AudioManager;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.dataAccess.ScoreRecordDao;
@@ -68,6 +69,7 @@ public class Game extends JPanel {
     public String difficulty = "easy";
 
     public MainFrame mainFrame;
+
     //游戏结束标志
     private boolean gameOverFlag = false;
 
@@ -84,6 +86,8 @@ public class Game extends JPanel {
         eliteProEnemyFactory = new EliteProEnemyFactory();
         bossFactory = new BossFactory();
 
+        AudioManager.getInstance().Init();
+
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
 
@@ -95,6 +99,8 @@ public class Game extends JPanel {
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
+
+        AudioManager.getInstance().PlayBGM();
 
         // 定时任务：绘制、对象产生、碰撞判定、及结束判定
         TimerTask task = new TimerTask() {
@@ -164,6 +170,9 @@ public class Game extends JPanel {
         if (!bossFactory.IsCreated) {
             enemyAircrafts.add(bossFactory.create());
             bossFactory.IsCreated = true;
+
+            AudioManager.getInstance().StopBGM();
+            AudioManager.getInstance().PlayBoss();
         }
     }
 
@@ -242,6 +251,8 @@ public class Game extends JPanel {
                             prop.ifPresent(props::add);
                         }
                         score += 114514;
+                        AudioManager.getInstance().StopBoss();
+                        AudioManager.getInstance().PlayBGM();
                     }
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
@@ -250,6 +261,7 @@ public class Game extends JPanel {
 
                         score += 10;
                     }
+                    AudioManager.getInstance().PlaySFX("hit");
                 }
                 // 英雄机 与 敌机 相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
@@ -295,8 +307,14 @@ public class Game extends JPanel {
         if (heroAircraft.getHp() <= 0) {
             timer.cancel(); // 取消定时器并终止所有调度任务
             gameOverFlag = true;
+            if (AudioManager.getInstance().IsBoss) {
+                AudioManager.getInstance().StopBoss();
+            } else {
+                AudioManager.getInstance().StopBGM();
+            }
             System.out.println("Game Over!");
-            dao.addRecord(score, "fuck", "normal");
+
+            AudioManager.getInstance().PlaySFX("gameover");
 
             mainFrame.leaderBoard.RefreshTable(this);
             mainFrame.cardLayout.show(mainFrame.mainContainer, "leaderBoard");

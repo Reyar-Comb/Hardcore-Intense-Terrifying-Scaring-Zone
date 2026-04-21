@@ -9,6 +9,7 @@ public class FreezeProp  extends BaseProp{
 
     @Override
     public void active() {
+        super .active();
         System.out.println("Collected Freeze");
     }
 }

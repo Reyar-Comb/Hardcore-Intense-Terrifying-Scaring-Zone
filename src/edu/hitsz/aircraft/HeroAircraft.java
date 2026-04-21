@@ -30,7 +30,7 @@ public class HeroAircraft extends AbstractAircraft {
             instance = new HeroAircraft(
                     MainFrame.WINDOW_WIDTH / 2,
                     MainFrame.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-                    0, 0, 100
+                    0, 0, 1000
             );
             instance.direction = -1;
         }
