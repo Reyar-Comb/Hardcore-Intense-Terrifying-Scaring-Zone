@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cd9a8b0c-b05f-4e00-8043-61f728b55fdc" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/SwingDemo/SwingDemo.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/code/SwingDemo/SwingDemo.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/code/code.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/ui/StartMenu.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/ui/StartMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../database/normal.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../database/normal.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../0_实验环境搭建说明.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../实验1：系统分析及单例模式PPT.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../实验2：简单工厂和工厂模式PPT.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../实验3：策略模式.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../实验4：DAO模式和单元测试.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../实验一实验指导书2026.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../实验三实验指导书.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../实验二实验指导书.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../实验四实验指导书.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/Boss.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/Boss.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/EliteEnemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/EliteEnemy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/ElitePlusEnemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/ElitePlusEnemy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/EliteProEnemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/EliteProEnemy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/HeroAircraft.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/HeroAircraft.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/MobEnemy.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/aircraft/MobEnemy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/Game$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/HeroController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/HeroController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/HeroController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/HeroController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/ImageManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/ImageManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/application/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/basic/AbstractFlyingObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/basic/AbstractFlyingObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/bullet/BaseBullet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/bullet/BaseBullet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/dataAccess/ScoreRecordDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/dataAccess/ScoreRecordDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/dataAccess/ScoreRecordDaoImpl$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/dataAccess/ScoreRecordDaoImpl$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/dataAccess/ScoreRecordDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/dataAccess/ScoreRecordDaoImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/BossFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/BossFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/EliteEnemyFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/EliteEnemyFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/ElitePlusEnemyFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/ElitePlusEnemyFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/EliteProEnemyFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/EliteProEnemyFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/MobEnemyFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/enemyfactory/MobEnemyFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/prop/BaseProp.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../out/production/AircraftWar-base/edu/hitsz/prop/BaseProp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/Boss.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/Boss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/EliteEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/EliteEnemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/ElitePlusEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/ElitePlusEnemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/EliteProEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/EliteProEnemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/HeroAircraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/HeroAircraft.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/MobEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/aircraft/MobEnemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/application/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/application/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/application/HeroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/application/HeroController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/application/ImageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/application/ImageManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/basic/AbstractFlyingObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/basic/AbstractFlyingObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/bullet/BaseBullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/bullet/BaseBullet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/dataAccess/ScoreRecordDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/dataAccess/ScoreRecordDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/dataAccess/ScoreRecordDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/dataAccess/ScoreRecordDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/BossFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/BossFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/EliteEnemyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/EliteEnemyFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/ElitePlusEnemyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/ElitePlusEnemyFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/EliteProEnemyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/EliteProEnemyFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/MobEnemyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/enemyfactory/MobEnemyFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../src/edu/hitsz/prop/BaseProp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../src/edu/hitsz/prop/BaseProp.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/Users/reyar/docs/javalab/Lab1/AircraftWar-base1.0/doc/Lab5/code" value="3Ce4hRyMdcgqn2uADsTnObYZbZy" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Reyar-Comb"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Reyar-Comb/Hardcore-Intense-Terrifying-Scaring-Zone.git",
+    "accountId": "6663bf77-0fcb-48d7-85d8-338105bed9e1"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3Ce4hRyMdcgqn2uADsTnObYZbZy" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "277",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/reyar/docs/javalab/Lab1/AircraftWar-base1.0/doc/Lab5/code",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "应用程序.CardLayoutDemo.executor": "Run",
+    "应用程序.SimpleCalculator.executor": "Run"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="cd9a8b0c-b05f-4e00-8043-61f728b55fdc" name="更改" comment="" />
+      <created>1776732820857</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1776732820857</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>
