@@ -37,7 +37,6 @@ public class Game extends JPanel {
     private final List<BaseBullet> enemyBullets;
     private final List<BaseProp> props;
 
-    // 使用已有的观察者实现管理敌机/子弹响应炸弹与冰冻
     private final PropSubject propSubject = new PropSubjectImpl();
 
     private MobEnemyFactory mobEnemyFactory;
