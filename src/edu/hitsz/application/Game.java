@@ -7,7 +7,7 @@ import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.dataAccess.ScoreRecordDao;
 import edu.hitsz.dataAccess.ScoreRecordDaoImpl;
 import edu.hitsz.enemyfactory.*;
-import edu.hitsz.prop.BaseProp;
+import edu.hitsz.prop.*;
 import edu.hitsz.ui.MainFrame;
 
 import javax.swing.*;
@@ -29,12 +29,16 @@ public class Game extends JPanel {
     private final Timer timer;
     //时间间隔(ms)，控制刷新频率
     private final int timeInterval = 40;
-
+    public static double enemyHpMultiplier = 1;
+    public static double bossHpMultiplier = 1;
     private final HeroAircraft heroAircraft;
     private final List<AbstractAircraft> enemyAircrafts;
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<BaseProp> props;
+
+    // 使用已有的观察者实现管理敌机/子弹响应炸弹与冰冻
+    private final PropSubject propSubject = new PropSubjectImpl();
 
     private MobEnemyFactory mobEnemyFactory;
     private EliteEnemyFactory eliteEnemyFactory;
@@ -43,16 +47,16 @@ public class Game extends JPanel {
     private BossFactory bossFactory;
 
     //屏幕中出现的敌机最大数量
-    private final int enemyMaxNumber = 5;
+    protected int enemyMaxNumber = 5;
 
     //敌机生成周期
     protected double enemySpawnCycle  =  10;
     private int enemySpawnCounter = 0;
 
     //敌机生成概率
-    private final double eliteProb = 0.6;
-    private final double elitePlusProb = 0.3;
-    private final double eliteProProb = 0.1;
+    protected double eliteProb = 0.6;
+    protected double elitePlusProb = 0.3;
+    protected double eliteProProb = 0.1;
 
     //英雄机和敌机射击周期
     protected double shootCycle = 20;
@@ -61,7 +65,9 @@ public class Game extends JPanel {
     //当前玩家分数
     public int score = 0;
 
-    private int bossScore = 100;
+    protected int bossScore = 100;
+    // nextBossScore: score threshold at which next boss will spawn (score-based delta)
+    protected int nextBossScore;
 
     public final ScoreRecordDao dao = new ScoreRecordDaoImpl();
 
@@ -88,6 +94,9 @@ public class Game extends JPanel {
 
         AudioManager.getInstance().Init();
 
+        // initialize nextBossScore threshold
+        this.nextBossScore = this.bossScore;
+
         //启动英雄机鼠标监听
         new HeroController(this, heroAircraft);
 
@@ -98,49 +107,57 @@ public class Game extends JPanel {
     /**
      * 游戏启动入口，执行游戏逻辑
      */
-    public void action() {
-
-        AudioManager.getInstance().PlayBGM();
-
-        // 定时任务：绘制、对象产生、碰撞判定、及结束判定
+    public final void action() {
+        onStart();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-
-                enemySpawnCounter++;
-                if (score > bossScore) {
-                    generateBoss();
-                }
-
-                if (enemySpawnCounter >=enemySpawnCycle) {
-                    enemySpawnCounter = 0;
-                    // 产生普通敌机
-                    generateEnemy();
-
-                }
-
-                // 飞机发射子弹
-                shootAction();
-                // 子弹移动
-                bulletsMoveAction();
-                // 道具移动
-                propMoveAction();
-                // 飞机移动
-                aircraftsMoveAction();
-                // 撞击检测
-                crashCheckAction();
-                // 后处理
-                postProcessAction();
-                // 重绘界面
-                repaint();
-                // 游戏结束检查
-                checkResultAction();
+                templateTick();
             }
         };
-        // 以固定延迟时间进行执行：本次任务执行完成后，延迟 timeInterval 再执行下一次
-        timer.schedule(task,0,timeInterval);
-
+        timer.schedule(task, 0, timeInterval);
     }
+
+    private final void templateTick() {
+        updateVariable();
+        generateEnemyStep();
+        shootStep();
+        bulletsMoveStep();
+        propsMoveStep();
+        aircraftsMoveStep();
+        crashCheckStep();
+        postProcessStep();
+        paintStep();
+        checkResultStep();
+    }
+
+    protected void onStart() { AudioManager.getInstance().PlayBGM(); }
+    protected void generateEnemyStep() {
+        enemySpawnCounter++;
+        // spawn boss when player's score reaches threshold and boss not already present
+        if (!bossFactory.IsCreated && score >= nextBossScore) {
+            generateBoss();
+        }
+
+        if (enemySpawnCounter >=enemySpawnCycle) {
+            enemySpawnCounter = 0;
+            // 产生普通敌机
+            generateEnemy();
+
+        }
+    }
+    protected void updateVariable() {}
+    protected void shootStep() { shootAction(); }
+    protected void bulletsMoveStep() { bulletsMoveAction(); }
+    protected void propsMoveStep() { propMoveAction(); }
+    protected void aircraftsMoveStep() { aircraftsMoveAction(); }
+    protected void crashCheckStep() { crashCheckAction(); }
+    protected void postProcessStep() { postProcessAction(); }
+    protected void paintStep() { repaint(); }
+    protected void checkResultStep() { checkResultAction(); }
+
+
+
 
 
     //***********************
@@ -153,14 +170,19 @@ public class Game extends JPanel {
     private void generateEnemy() {
         if (enemyAircrafts.size() < enemyMaxNumber) {
             double rand = Math.random();
+            AbstractAircraft enemy = null;
             if (rand < eliteProProb) {
-                enemyAircrafts.add(eliteProEnemyFactory.create());
+                enemy = eliteProEnemyFactory.create();
             } else if (rand < elitePlusProb) {
-                enemyAircrafts.add(elitePlusEnemyFactory.create());
+                enemy = elitePlusEnemyFactory.create();
             } else if (rand < eliteProb) {
-                enemyAircrafts.add(eliteEnemyFactory.create());
+                enemy = eliteEnemyFactory.create();
             } else {
-                enemyAircrafts.add(mobEnemyFactory.create());
+                enemy = mobEnemyFactory.create();
+            }
+            enemyAircrafts.add(enemy);
+            if (enemy instanceof PropObserver) {
+                propSubject.addObserver((PropObserver) enemy);
             }
 
         }
@@ -168,7 +190,11 @@ public class Game extends JPanel {
 
     private void generateBoss() {
         if (!bossFactory.IsCreated) {
-            enemyAircrafts.add(bossFactory.create());
+            AbstractAircraft boss = bossFactory.create();
+            enemyAircrafts.add(boss);
+            if (boss instanceof PropObserver) {
+                propSubject.addObserver((PropObserver) boss);
+            }
             bossFactory.IsCreated = true;
 
             AudioManager.getInstance().StopBGM();
@@ -182,9 +208,17 @@ public class Game extends JPanel {
             shootCounter = 0;
             //英雄机射击
             heroBullets.addAll(heroAircraft.shoot());
-            // TODO 敌机射击
+            // 敌机射击并注册子弹观察者
             for (AbstractAircraft enemyAircraft : enemyAircrafts) {
-                enemyBullets.addAll(enemyAircraft.shoot());
+                List<BaseBullet> newBullets = enemyAircraft.shoot();
+                if (!newBullets.isEmpty()) {
+                    enemyBullets.addAll(newBullets);
+                    for (BaseBullet b : newBullets) {
+                        if (b instanceof PropObserver) {
+                            propSubject.addObserver((PropObserver) b);
+                        }
+                    }
+                }
             }
         }
     }
@@ -198,11 +232,40 @@ public class Game extends JPanel {
         }
     }
 
+    /**
+     * 道具逻辑：
+     * - 对于炸弹、冰冻：只有敌机或敌机子弹碰到时生效（通过 PropSubject 通知观察者）
+     * - 其它道具（回血、子弹等）：英雄碰到时生效（保持原逻辑）
+     */
     private void propMoveAction() {
         for (BaseProp prop : props) {
+            if (prop.notValid()) {
+                continue;
+            }
+
+            // 先移动道具，确保道具按原逻辑前进
             prop.forward();
+
+            // 如果移动后已失效，跳过
+            if (prop.notValid()) {
+                continue;
+            }
+
+            // 只有英雄能触发道具
+            if (prop.crash(heroAircraft)) {
+                prop.active();
+                // 对于炸弹/冰冻：英雄拾取后对所有观察者生效
+                if (prop instanceof BombProp) {
+                    propSubject.notifyBomb(prop);
+                } else if (prop instanceof FreezeProp) {
+                    propSubject.notifyFreeze(prop);
+                }
+                prop.vanish();
+            }
         }
     }
+
+
 
     private void aircraftsMoveAction() {
         for (AbstractAircraft enemyAircraft : enemyAircrafts) {
@@ -215,10 +278,10 @@ public class Game extends JPanel {
      * 碰撞检测：
      * 1. 敌机攻击英雄
      * 2. 英雄攻击/撞击敌机
-     * 3. 英雄获得补给
+     * 3. 英雄获得补给（保留原逻辑）
      */
     private void crashCheckAction() {
-        // TODO 敌机子弹攻击英雄机
+        // 敌机子弹攻击英雄机
         for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) {
                 continue;
@@ -250,12 +313,15 @@ public class Game extends JPanel {
                             Optional<BaseProp> prop = enemyAircraft.createProp();
                             prop.ifPresent(props::add);
                         }
-                        score += 114514;
+                        score += 100;
                         AudioManager.getInstance().StopBoss();
                         AudioManager.getInstance().PlayBGM();
+                        // boss defeated: reset boss factory flag and set next spawn threshold to current score + bossScore
+                        bossFactory.IsCreated = false;
+                        nextBossScore = this.score + this.bossScore;
                     }
                     if (enemyAircraft.notValid()) {
-                        // TODO 获得分数，产生道具补给
+                        // 获得分数，产生道具补给
                         Optional<BaseProp> prop = enemyAircraft.createProp();
                         prop.ifPresent(props::add);
 
@@ -271,31 +337,46 @@ public class Game extends JPanel {
             }
         }
 
-        // Todo: 我方获得道具，道具生效
-        for (BaseProp prop : props) {
-            if (prop.notValid()) {
-                continue;
-            }
-
-            if (prop.crash(heroAircraft)) {
-                prop.active();
-                prop.vanish();
-            }
-        }
+        // 保留英雄拾取道具的行为（对于非炸弹/非冰冻道具）
+        
     }
 
 
     /**
      * 后处理：
-     * 1. 删除无效的子弹
-     * 2. 删除无效的敌机
+     * 1. 删除无效的子弹（并注销观察者）
+     * 2. 删除无效的敌机（并注销观察者）
      * 3. 删除无效的道具
      */
     private void postProcessAction() {
-        enemyBullets.removeIf(AbstractFlyingObject::notValid);
+        // 注销并移除无效敌机子弹
+        Iterator<BaseBullet> itb = enemyBullets.iterator();
+        while (itb.hasNext()) {
+            BaseBullet b = itb.next();
+            if (b.notValid()) {
+                if (b instanceof PropObserver) {
+                    propSubject.removeObserver((PropObserver) b);
+                }
+                itb.remove();
+            }
+        }
+
+        // 我方子弹简单移除
         heroBullets.removeIf(AbstractFlyingObject::notValid);
-        enemyAircrafts.removeIf(AbstractFlyingObject::notValid);
-        // Todo: 删除无效道具
+
+        // 注销并移除无效敌机
+        Iterator<AbstractAircraft> ita = enemyAircrafts.iterator();
+        while (ita.hasNext()) {
+            AbstractAircraft a = ita.next();
+            if (a.notValid()) {
+                if (a instanceof PropObserver) {
+                    propSubject.removeObserver((PropObserver) a);
+                }
+                ita.remove();
+            }
+        }
+
+        // 道具移除
         props.removeIf(AbstractFlyingObject::notValid);
     }
 
@@ -305,6 +386,7 @@ public class Game extends JPanel {
     private void checkResultAction(){
         // 游戏结束检查英雄机是否存活
         if (heroAircraft.getHp() <= 0) {
+            // stop timer
             timer.cancel(); // 取消定时器并终止所有调度任务
             gameOverFlag = true;
             if (AudioManager.getInstance().IsBoss) {
@@ -316,8 +398,18 @@ public class Game extends JPanel {
 
             AudioManager.getInstance().PlaySFX("gameover");
 
-            mainFrame.leaderBoard.RefreshTable(this);
-            mainFrame.cardLayout.show(mainFrame.mainContainer, "leaderBoard");
+            // UI updates must run on Swing EDT. Also ensure leaderBoard has dao reference set.
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                if (mainFrame != null) {
+                    if (mainFrame.leaderBoard != null) {
+                        mainFrame.leaderBoard.dao = this.dao;
+                        mainFrame.leaderBoard.RefreshTable(this);
+                    }
+                    mainFrame.cardLayout.show(mainFrame.mainContainer, "leaderBoard");
+                    mainFrame.mainContainer.revalidate();
+                    mainFrame.mainContainer.repaint();
+                }
+            });
         }
     };
 
@@ -346,7 +438,7 @@ public class Game extends JPanel {
         paintImageWithPositionRevised(g, heroBullets);
         paintImageWithPositionRevised(g, enemyAircrafts);
 
-        // Todo: 绘制道具
+        // 绘制道具
         paintImageWithPositionRevised(g, props);
 
         g.drawImage(ImageManager.HERO_IMAGE, heroAircraft.getLocationX() - ImageManager.HERO_IMAGE.getWidth() / 2,

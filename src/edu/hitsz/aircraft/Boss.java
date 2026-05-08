@@ -3,6 +3,8 @@ package edu.hitsz.aircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.prop.BaseProp;
+import edu.hitsz.prop.PropObserver;
 import edu.hitsz.prop.PropType;
 import edu.hitsz.shootStrategy.CircularShoot;
 import edu.hitsz.ui.MainFrame;
@@ -11,7 +13,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Boss extends AbstractAircraft {
+public class Boss extends AbstractAircraft implements PropObserver {
     public Boss(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
         this.speedX = 10;
@@ -38,4 +40,13 @@ public class Boss extends AbstractAircraft {
         );
     }
 
+    @Override
+    public void onBombActivated(BaseProp prop) {
+
+    }
+
+    @Override
+    public void onFreezeActivated(BaseProp prop) {
+
+    }
 }

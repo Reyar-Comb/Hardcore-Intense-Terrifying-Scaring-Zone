@@ -37,14 +37,6 @@ ScoreRecordDao <|.. ScoreRecordDaoImpl
 ScoreRecordDaoImpl ..> ScoreRecord : creates/uses
 Game ..> ScoreRecordDao : uses
 
-note right of ScoreRecordDaoImpl
-showRecords prints ranking with index
-1, 2, 3 ...
-end note
 
-note right of ScoreRecordDaoImpl
-data file path:
-database/<difficulty>.json
-end note
 
 @enduml

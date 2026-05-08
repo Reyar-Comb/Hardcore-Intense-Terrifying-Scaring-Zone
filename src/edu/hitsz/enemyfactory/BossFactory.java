@@ -1,6 +1,7 @@
 package edu.hitsz.enemyfactory;
 
 import edu.hitsz.aircraft.Boss;
+import edu.hitsz.application.Game;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 import edu.hitsz.ui.MainFrame;
@@ -13,7 +14,7 @@ public class BossFactory implements IEnemyFactory{
                 (int) (Math.random() * MainFrame.WINDOW_HEIGHT * 0.05),
                 0,
                 0,
-                500
+                (int) (500 * Game.bossHpMultiplier)
         );
     }
 }

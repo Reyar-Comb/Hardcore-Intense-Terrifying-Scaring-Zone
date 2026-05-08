@@ -1,0 +1,47 @@
+@startuml
+skinparam classAttributeIconSize 0
+package "Template Method - Game Difficulty (Concrete)" {
+  class Game {
+    - enemySpawnCycle: double
+    - shootCycle: double
+    - enemyMaxNumber: int
+    - eliteProb: double
+    - bossScore: int
+    - nextBossScore: int
+    + action(): void {final}
+    - templateTick(): void {final}
+    # onStart(): void
+    # updateVariable(): void
+    # generateEnemyStep(): void
+    # shootStep(): void
+    # bulletsMoveStep(): void
+    # propsMoveStep(): void
+    # aircraftsMoveStep(): void
+    # crashCheckStep(): void
+    # postProcessStep(): void
+    # checkResultStep(): void
+  }
+
+  class EasyGame {
+    + EasyGame()
+    -- inherits default behavior
+  }
+
+  class NormalGame {
+    + NormalGame()
+    # updateVariable():
+  }
+
+  class HardGame {
+    + HardGame()
+    # updateVariable():
+    # onBossDefeated():
+  }
+
+  Game <|-- EasyGame
+  Game <|-- NormalGame
+  Game <|-- HardGame
+}
+
+
+@enduml

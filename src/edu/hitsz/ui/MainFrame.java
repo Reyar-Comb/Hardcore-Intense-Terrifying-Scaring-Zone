@@ -1,6 +1,9 @@
 package edu.hitsz.ui;
 
+import edu.hitsz.application.EasyGame;
 import edu.hitsz.application.Game;
+import edu.hitsz.application.HardGame;
+import edu.hitsz.application.NormalGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +19,7 @@ public class MainFrame extends JFrame {
     public DifficultyMenu difficultyMenu;
     public LeaderBoard leaderBoard;
 
-    public final Game gamePanel = new Game();
+    public Game gamePanel;
     public MainFrame() {
         setTitle("Aircraft War");
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -27,7 +30,10 @@ public class MainFrame extends JFrame {
 
         startMenu = new StartMenu(this);
         difficultyMenu = new DifficultyMenu(this);
+        // initialize default game panel
+        gamePanel = new Game();
         leaderBoard = new LeaderBoard(this, gamePanel);
+        leaderBoard.dao = gamePanel.dao;
 
 
         mainContainer.add(startMenu, "start");
@@ -39,10 +45,37 @@ public class MainFrame extends JFrame {
         mainContainer.setVisible(true);
     }
     public void ChooseDifficulty(Game game, String difficulty) {
+        // create a new Game instance according to difficulty and replace the current game panel
+        Game newGame;
+        switch (difficulty) {
+            case "easy":
+                newGame = new EasyGame();
+                newGame.mainFrame = this;
+                break;
+            case "hard":
+                newGame = new HardGame();
+                newGame.mainFrame = this;
+                break;
+            default:
+                newGame = new NormalGame();
+                newGame.mainFrame = this;
+                break;
+        }
+
+        mainContainer.remove(gamePanel);
+        gamePanel = newGame;
+        mainContainer.add(gamePanel, "game");
+
+        // rebuild leaderBoard so its internal upload button captures the new game instance
+        mainContainer.remove(leaderBoard);
+        leaderBoard = new LeaderBoard(this, gamePanel);
+        leaderBoard.dao = gamePanel.dao;
+        mainContainer.add(leaderBoard, "leaderBoard");
+
+        // show game
         cardLayout.show(mainContainer, "game");
-        game.difficulty = difficulty;
-        game.mainFrame = this;
-        leaderBoard.dao = game.dao;
-        game.action();
+        gamePanel.difficulty = difficulty;
+        gamePanel.mainFrame = this;
+        gamePanel.action();
     }
 }

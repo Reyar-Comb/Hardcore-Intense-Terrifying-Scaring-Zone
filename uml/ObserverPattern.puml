@@ -1,0 +1,50 @@
+@startuml
+skinparam classAttributeIconSize 0
+package "Observer Pattern - Props and Devices" {
+  interface PropObserver {
+    + onBombActivated(prop: BaseProp): void
+    + onFreezeActivated(prop: BaseProp): void
+  }
+
+  interface PropSubject {
+    + addObserver(o: PropObserver): void
+    + removeObserver(o: PropObserver): void
+    + notifyBomb(prop: BaseProp): void
+    + notifyFreeze(prop: BaseProp): void
+  }
+
+  class PropSubjectImpl {
+    - observers: List<PropObserver>
+    + addObserver(o: PropObserver): void
+    + removeObserver(o: PropObserver): void
+    + notifyBomb(prop: BaseProp): void
+    + notifyFreeze(prop: BaseProp): void
+  }
+
+  class BaseProp {
+    + active(): void
+    + vanish(): void
+  }
+
+  class AbstractAircraft {
+    - hp: int
+    - speedX: int
+    - speedY: int
+    + forward(): void
+    + decreaseHp(int): void
+  }
+
+  class EnemyBullet {
+    - power: int
+    + forward(): void
+  }
+
+  PropObserver <|.. AbstractAircraft
+  PropObserver <|.. EnemyBullet
+  PropSubjectImpl ..|> PropSubject
+
+  Game "1" o-- "1" PropSubjectImpl : uses
+  BaseProp "*" --> "1" PropSubjectImpl : triggers
+}
+
+@enduml

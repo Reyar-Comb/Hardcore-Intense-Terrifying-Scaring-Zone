@@ -3,6 +3,7 @@ package edu.hitsz.aircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.BaseProp;
+import edu.hitsz.prop.PropObserver;
 import edu.hitsz.shootStrategy.NullShoot;
 import edu.hitsz.ui.MainFrame;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * 不可射击、不掉落道具
  * @author hitsz
  */
-public class MobEnemy extends AbstractAircraft {
+public class MobEnemy extends AbstractAircraft implements PropObserver {
 
     public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
@@ -28,6 +29,17 @@ public class MobEnemy extends AbstractAircraft {
         if (locationY >= MainFrame.WINDOW_HEIGHT ) {
             vanish();
         }
+    }
+
+    @Override
+    public void onBombActivated(BaseProp prop) {
+        this.vanish();
+    }
+
+    @Override
+    public void onFreezeActivated(BaseProp prop) {
+        this.speedX = 0;
+        this.speedY = 0;
     }
 
 }

@@ -7,6 +7,7 @@ public class BombProp  extends BaseProp{
 
     public BombProp(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
+        speedY = -speedY;
     }
 
     @Override
@@ -14,4 +15,6 @@ public class BombProp  extends BaseProp{
         AudioManager.getInstance().PlaySFX("bomb");
         System.out.println("Collected Bomb");
     }
+
+
 }
